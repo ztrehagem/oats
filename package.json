@@ -1,0 +1,40 @@
+{
+  "name": "@ztrehagem/oats",
+  "version": "0.1.0",
+  "description": "Tools for generating TypeScript code from your OpenAPI documents.",
+  "author": "Shigeki Suwa <shigeki.suwa@ztrehagem.dev>",
+  "license": "Unlicense",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ztrehagem/oats.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ztrehagem/oats/issues"
+  },
+  "homepage": "https://github.com/ztrehagem/oats#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/main.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepack": "npm run clean && npm run build",
+    "clean": "rm -rf dist *.tsbuildinfo",
+    "build": "tsc",
+    "lint": "run-s lint:*",
+    "lint:prettier": "prettier --ignore-path=.gitignore --check .",
+    "fix": "run-s fix:*",
+    "fix:prettier": "npm run lint:prettier -- --write"
+  },
+  "dependencies": {
+    "camel-case": "^4.1.2"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "openapi-types": "^11.0.0",
+    "prettier": "^2.6.2",
+    "typescript": "^4.6.3"
+  }
+}
