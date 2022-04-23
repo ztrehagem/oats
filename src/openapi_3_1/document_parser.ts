@@ -206,10 +206,10 @@ export const unref = <T>(refString: string, document: oa.Document): T => {
 
   const keys = refString.slice(2).split("/");
 
-  let target: any = document;
+  let target: unknown = document;
 
   for (const key of keys) {
-    target = target[key];
+    target = (target as Record<string, unknown>)[key];
   }
 
   return target as T;
