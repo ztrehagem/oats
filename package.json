@@ -1,6 +1,6 @@
 {
   "name": "@ztrehagem/oats",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Tools for generating TypeScript code from your OpenAPI documents.",
   "author": "Shigeki Suwa <shigeki.suwa@ztrehagem.dev>",
   "license": "Unlicense",
