@@ -4,9 +4,16 @@ extends:
   - plugin:@typescript-eslint/recommended-requiring-type-checking
   - prettier
 
+env:
+  node: true
+
+parserOptions:
+  project:
+    - tsconfig.json
+
 rules:
+  "@typescript-eslint/no-explicit-any": "off"
   "@typescript-eslint/explicit-module-boundary-types": "warn"
-  "@typescript-eslint/no-namespace": "off"
   "@typescript-eslint/no-non-null-assertion": "off"
   "@typescript-eslint/no-unused-vars":
     - "warn"
@@ -14,13 +21,6 @@ rules:
       args: "none"
       ignoreRestSiblings: true
 
-ignorePatterns:
-  - scripts
-
 overrides:
   - files:
       - "src/**/*.ts"
-    parserOptions:
-      project: tsconfig.json
-    env:
-      node: true

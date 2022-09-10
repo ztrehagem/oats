@@ -15,14 +15,16 @@
   "publishConfig": {
     "access": "public"
   },
+  "type": "module",
   "main": "./dist/main.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "prepack": "npm run clean && npm run build",
+    "prepare": "npm run clean && npm run build",
     "clean": "rm -rf dist *.tsbuildinfo",
     "build": "tsc",
+    "example": "node ./scripts/example.js",
     "lint": "run-s lint:*",
     "lint:eslint": "eslint --ignore-path=.gitignore --max-warnings=0 .",
     "lint:prettier": "prettier --ignore-path=.gitignore --check .",
@@ -32,15 +34,18 @@
   },
   "dependencies": {
     "camel-case": "^4.1.2",
-    "openapi-types": "^11.0.0"
+    "js-yaml": "^4.1.0",
+    "openapi-types": "^11.1.0"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.20.0",
-    "@typescript-eslint/parser": "^5.20.0",
-    "eslint": "^8.14.0",
+    "@types/js-yaml": "^4.0.5",
+    "@types/node": "^18.7.16",
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
+    "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.5.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.6.2",
-    "typescript": "^4.6.3"
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.3"
   }
 }
