@@ -13,30 +13,26 @@ Generate TypeScript code from OpenAPI documents.
 npm install @ztrehagem/oats
 ```
 
-## Usage
+## Example
 
-```ts
+```js
 import { Parser, TypeStringGenerator } from "@ztrehagem/oats";
 
 const parser = new Parser();
 const { operations, schemas } = await parser.parse("./path/to/openapidoc.yaml");
-```
 
-examples:
-
-- [`operations`](./example/out/parsedOperations.generated.js)
-- [`schemas`](./example/out/parsedSchemas.generated.js)
-
-```ts
 const generator = new TypeStringGenerator();
 
 for (const [url, { name, schema }] of schemas.entries()) {
   const schemaType = generator.generate(schema, { schemas });
 }
+
+// ...
 ```
+
+[Full script](./example/run.js)
 
 code generation examples:
 
-- [generated schema types](./example/out/schemas.generated.ts)
-- [generated operation types](./example/out/operations.generated.ts)
-- [script](./example/run.js)
+- [schema types](./example/out/schemas.generated.ts)
+- [operation types](./example/out/operations.generated.ts)

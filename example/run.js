@@ -9,18 +9,10 @@ const { operations, schemas } = await parser.parse(
   "./example/openapi/api.yaml"
 );
 
+console.log(inspect(operations, false, Infinity, true));
+console.log(inspect(Object.fromEntries(schemas.entries()), false, Infinity, false))
+
 await fs.mkdir(new URL("out", import.meta.url), { recursive: true });
-
-await fs.writeFile(
-  "./example/out/parsedOperations.generated.js",
-  "export default " + inspect(operations, false, Infinity, false)
-);
-
-await fs.writeFile(
-  "./example/out/parsedSchemas.generated.js",
-  "export default " +
-    inspect(Object.fromEntries(schemas.entries()), false, Infinity, false)
-);
 
 await (async function generateSchemas() {
   const file = await fs.open("./example/out/schemas.generated.ts", "w");
