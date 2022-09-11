@@ -1,4 +1,4 @@
-name: Lint
+name: CodeCheck
 
 on: push
 
@@ -9,11 +9,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version-file: ".node-version"
           cache: "npm"
 
-      - run: npm install
+      - run: npm ci
 
       - run: npm run lint
