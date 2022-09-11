@@ -1,6 +1,11 @@
 # @ztrehagem/oats
 
-Tools for generating TypeScript code from your OpenAPI documents.
+[![](https://img.shields.io/npm/v/@ztrehagem/oats)](https://www.npmjs.com/package/@ztrehagem/oats)
+[![](https://img.shields.io/npm/types/@ztrehagem/oats)]()
+[![](https://img.shields.io/librariesio/release/npm/@ztrehagem/oats)]()
+[![](https://img.shields.io/github/license/ztrehagem/oats)](./LICENSE)
+
+Generate TypeScript code from OpenAPI documents.
 
 ## Installation
 
@@ -8,38 +13,30 @@ Tools for generating TypeScript code from your OpenAPI documents.
 npm install @ztrehagem/oats
 ```
 
-## Examples
-
-### Schema Object to TypeScript
+## Usage
 
 ```ts
-import { parseSchemaObjectOAS3_1, generateSchemaType } from "@ztrehagem/oats";
+import { Parser, TypeStringGenerator } from "@ztrehagem/oats";
 
-const schemaObject = {
-  type: "object",
-  properties: {
-    name: {
-      type: "string",
-    },
-    age: {
-      type: "number",
-    },
-  },
-  required: ["name"],
-};
-
-const ast = parseSchemaObjectOAS3_1(schemaObject);
-const typeString = generateSchemaType(ast);
-//=> '{ "name": string; "age"?: number; }'
+const parser = new Parser();
+const { operations, schemas } = await parser.parse("./path/to/openapidoc.yaml");
 ```
 
-### Parsing OpenAPI Document
+examples:
+
+- [`operations`](./example/out/parsedOperations.generated.js)
+- [`schemas`](./example/out/parsedSchemas.generated.js)
 
 ```ts
-import yaml from "js-yaml";
-import { DocumentParserOAS3_1 } from "@ztrehagem/oats";
+const generator = new TypeStringGenerator();
 
-const doc = yaml.load(yamlString);
-
-const parsed = new DocumentParserOAS3_1(doc).parse();
+for (const [url, { name, schema }] of schemas.entries()) {
+  const schemaType = generator.generate(schema, { schemas });
+}
 ```
+
+code generation examples:
+
+- [generated schema types](./example/out/schemas.generated.ts)
+- [generated operation types](./example/out/operations.generated.ts)
+- [script](./example/run.js)
