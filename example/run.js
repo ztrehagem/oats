@@ -10,7 +10,9 @@ const { operations, schemas } = await parser.parse(
 );
 
 console.log(inspect(operations, false, Infinity, true));
-console.log(inspect(Object.fromEntries(schemas.entries()), false, Infinity, false))
+console.log(
+  inspect(Object.fromEntries(schemas.entries()), false, Infinity, false)
+);
 
 await fs.mkdir(new URL("out", import.meta.url), { recursive: true });
 
