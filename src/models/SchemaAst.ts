@@ -8,17 +8,17 @@ export type SchemaAst =
   | TObject;
 
 export interface TAbstract {
-  type: string;
+  readonly type: string;
 }
 
 export interface TRef extends TAbstract {
-  type: "ref";
-  url: string;
+  readonly type: "ref";
+  readonly url: string;
 }
 
 export interface TAtom extends TAbstract {
-  type: "atom";
-  name:
+  readonly type: "atom";
+  readonly name:
     | "unknown"
     | "void"
     | "null"
@@ -29,32 +29,32 @@ export interface TAtom extends TAbstract {
 }
 
 export interface TIntersection extends TAbstract {
-  type: "intersection";
-  children: SchemaAst[];
+  readonly type: "intersection";
+  readonly children: SchemaAst[];
 }
 
 export interface TUnion extends TAbstract {
-  type: "union";
-  children: SchemaAst[];
+  readonly type: "union";
+  readonly children: SchemaAst[];
 }
 
 export interface TEnum extends TAbstract {
-  type: "enum";
-  cases: string[];
+  readonly type: "enum";
+  readonly cases: string[];
 }
 
 export interface TArray extends TAbstract {
-  type: "array";
-  child: SchemaAst;
+  readonly type: "array";
+  readonly child: SchemaAst;
 }
 
 export interface TObject extends TAbstract {
-  type: "object";
-  properties: TObjectProperty[];
+  readonly type: "object";
+  readonly properties: TObjectProperty[];
 }
 
 export interface TObjectProperty {
-  name: string;
-  schema: SchemaAst;
-  required: boolean;
+  readonly name: string;
+  readonly schema: SchemaAst;
+  readonly required: boolean;
 }

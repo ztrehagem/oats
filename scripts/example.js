@@ -1,7 +1,8 @@
 import { inspect } from "util";
-import { parse, TypeStringGenerator } from "../dist/main.js";
+import { Parser, TypeStringGenerator } from "../dist/main.js";
 
-const result = await parse("./openapi/api.yaml");
+const parser = new Parser();
+const result = await parser.parse("./openapi/api.yaml");
 
 console.log(inspect(result.operations, false, Infinity, true));
 

@@ -1,5 +1,5 @@
-import { NamedSchema } from "./models/NamedSchema.js";
-import { SchemaAst } from "./models/SchemaAst.js";
+import { NamedSchema } from "../models/NamedSchema.js";
+import { SchemaAst } from "../models/SchemaAst.js";
 
 export type Options = {
   namedSchemaPrefix: string;

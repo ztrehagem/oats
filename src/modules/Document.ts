@@ -1,9 +1,9 @@
 import { OpenAPIV3_1 as oa } from "openapi-types";
-import { SchemaAst, TObject, TObjectProperty } from "./models/SchemaAst.js";
-import { Operation, RequestType, ResponseType } from "./models/Operation.js";
-import { httpMethods } from "./models/HttpMethod.js";
-import { createFallbackOperationId } from "./utils/createOperationIdFallback.js";
-import { ParseContext } from "./models/ParseContext.js";
+import { SchemaAst, TObject, TObjectProperty } from "../models/SchemaAst.js";
+import { Operation, RequestType, ResponseType } from "../models/Operation.js";
+import { httpMethods } from "../models/HttpMethod.js";
+import { ParseContext } from "../models/ParseContext.js";
+import { createFallbackOperationId } from "../utils/createOperationIdFallback.js";
 
 export interface DocumentOptions {
   url: URL;
@@ -20,14 +20,14 @@ export class Document {
   }
 
   query<T>(pathString: string): T {
-    const keys = pathString
-      .slice(1)
-      .split("/")
-      .filter((key) => key.length > 0);
+    const keys = pathString.split("/").filter((key) => key.length > 0);
+
     let target: unknown = this.#obj;
+
     for (const key of keys) {
       target = (target as Record<string, unknown>)[key];
     }
+
     return target as T;
   }
 
@@ -50,10 +50,12 @@ export class Document {
           [...(pathItem.parameters ?? []), ...(operation.parameters ?? [])],
           context
         );
+
         const requestTypes = await this.#parseRequestBody(
           operation.requestBody,
           context
         );
+
         const responseTypes = await this.#parseResponses(
           operation.responses,
           context
@@ -121,14 +123,14 @@ export class Document {
     requestBody: oa.RequestBodyObject | oa.ReferenceObject | undefined,
     context: ParseContext
   ): Promise<RequestType[]> {
-    const rereferenced =
+    const dereferenced =
       requestBody && "$ref" in requestBody
         ? await context.unref<oa.RequestBodyObject>(
             new URL(requestBody.$ref, this.#url)
           )
         : requestBody;
 
-    const entires = Object.entries(rereferenced?.content ?? {});
+    const entires = Object.entries(dereferenced?.content ?? {});
 
     return await Promise.all(
       entires.map(async ([mediaType, obj]) => ({
@@ -189,7 +191,7 @@ export class Document {
 
     if ("$ref" in schema) {
       const url = new URL(schema.$ref, this.#url);
-      await context.addSchema(url);
+      await context.reportRefSchemaUrl(url);
       return { type: "ref", url: url.toString() };
     }
 

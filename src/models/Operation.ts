@@ -2,24 +2,24 @@ import { HttpMethod } from "./HttpMethod.js";
 import { SchemaAst, TObject } from "./SchemaAst.js";
 
 export interface Operation {
-  operationId: string;
-  path: string;
-  method: HttpMethod;
-  parameters: {
-    path: TObject | null;
-    query: TObject | null;
+  readonly operationId: string;
+  readonly path: string;
+  readonly method: HttpMethod;
+  readonly parameters: {
+    readonly path: TObject | null;
+    readonly query: TObject | null;
   };
-  requestTypes: RequestType[];
-  responseTypes: ResponseType[];
+  readonly requestTypes: RequestType[];
+  readonly responseTypes: ResponseType[];
 }
 
 export interface RequestType {
-  mediaType: string;
-  schema: SchemaAst;
+  readonly mediaType: string;
+  readonly schema: SchemaAst;
 }
 
 export interface ResponseType {
-  status: number;
-  mediaType?: string;
-  schema: SchemaAst;
+  readonly status: number;
+  readonly mediaType?: string;
+  readonly schema: SchemaAst;
 }

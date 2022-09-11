@@ -1,6 +1,6 @@
 import { SchemaAst } from "./SchemaAst.js";
 
 export interface NamedSchema {
-  name: string | null;
-  schema: SchemaAst;
+  readonly name: string | null;
+  readonly schema: SchemaAst;
 }
