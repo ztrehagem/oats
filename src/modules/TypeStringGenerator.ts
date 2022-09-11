@@ -1,22 +1,26 @@
 import { NamedSchema } from "../models/NamedSchema.js";
 import { SchemaAst } from "../models/SchemaAst.js";
 
-export type Options = {
+export interface TypeStringGeneratorOptions {
   namedSchemaPrefix: string;
-};
+}
+
+export interface GenerateOptions {
+  schemas?: ReadonlyMap<string, NamedSchema>;
+}
 
 export class TypeStringGenerator {
-  readonly #options: Options;
+  readonly #options: TypeStringGeneratorOptions;
 
-  constructor(options: Partial<Options> = {}) {
+  constructor(options: Partial<TypeStringGeneratorOptions> = {}) {
     this.#options = {
       namedSchemaPrefix: options.namedSchemaPrefix ?? "",
     };
   }
 
-  generate(ast: SchemaAst, map: ReadonlyMap<string, NamedSchema>): string {
+  generate(ast: SchemaAst, options: GenerateOptions): string {
     if (ast.type === "ref") {
-      const schema = map.get(ast.url);
+      const schema = options.schemas?.get(ast.url);
 
       if (!schema) {
         return "unknown";
@@ -26,7 +30,7 @@ export class TypeStringGenerator {
         return `${this.#options.namedSchemaPrefix}${schema.name}`;
       }
 
-      return this.generate(schema.schema, map);
+      return this.generate(schema.schema, options);
     }
 
     if (ast.type === "atom") {
@@ -34,11 +38,11 @@ export class TypeStringGenerator {
     }
 
     if (ast.type === "intersection") {
-      return ast.children.map((s) => this.generate(s, map)).join(" & ");
+      return ast.children.map((s) => this.generate(s, options)).join(" & ");
     }
 
     if (ast.type === "union") {
-      return ast.children.map((s) => this.generate(s, map)).join(" | ");
+      return ast.children.map((s) => this.generate(s, options)).join(" | ");
     }
 
     if (ast.type === "enum") {
@@ -46,14 +50,14 @@ export class TypeStringGenerator {
     }
 
     if (ast.type === "array") {
-      return `Array<${this.generate(ast.child, map)}>`;
+      return `Array<${this.generate(ast.child, options)}>`;
     }
 
     if (ast.type === "object") {
       const props = ast.properties.map((property) => {
         const name = JSON.stringify(property.name);
         const optional = property.required ? "" : "?";
-        const type = this.generate(property.schema, map);
+        const type = this.generate(property.schema, options);
         return `${name}${optional}: ${type};`;
       });
       return `{ ${props.join(" ")} }`;

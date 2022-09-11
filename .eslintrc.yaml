@@ -9,7 +9,7 @@ env:
 
 parserOptions:
   project:
-    - tsconfig.json
+    - tsconfig.eslint.json
 
 rules:
   "@typescript-eslint/no-explicit-any": "off"

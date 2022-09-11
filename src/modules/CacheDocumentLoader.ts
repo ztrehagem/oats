@@ -13,8 +13,8 @@ export class CacheDocumentLoader implements DocumentLoader {
     return (this.#shared ??= new CacheDocumentLoader());
   }
 
-  async get({ origin, pathname, search }: URL): Promise<Document> {
-    const url = new URL(pathname + search, origin);
+  async get(url: URL): Promise<Document> {
+    url = new URL(url.pathname + url.search, url);
     const key = url.toString();
 
     const cached = this.#documents.get(key);
