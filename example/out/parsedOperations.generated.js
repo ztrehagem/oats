@@ -138,7 +138,7 @@ export default [
     ],
   },
   {
-    operationId: "getFoo",
+    operationId: null,
     path: "/foo",
     method: "get",
     parameters: { path: null, query: null },

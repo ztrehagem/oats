@@ -33,7 +33,6 @@
     "fix:prettier": "npm run lint:prettier -- --write"
   },
   "dependencies": {
-    "camel-case": "^4.1.2",
     "js-yaml": "^4.1.0",
     "openapi-types": "^11.1.0"
   },

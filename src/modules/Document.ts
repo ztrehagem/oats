@@ -3,7 +3,6 @@ import { SchemaAst, TObject, TObjectProperty } from "../models/SchemaAst.js";
 import { Operation, RequestType, ResponseType } from "../models/Operation.js";
 import { httpMethods } from "../models/HttpMethod.js";
 import { ParseContext } from "../models/ParseContext.js";
-import { createFallbackOperationId } from "../utils/createOperationIdFallback.js";
 
 export interface DocumentOptions {
   url: URL;
@@ -43,8 +42,7 @@ export class Document {
 
     const promises = operations.map(
       async ({ path, pathItem, method, operation }) => {
-        const operationId =
-          operation.operationId ?? createFallbackOperationId(method, path);
+        const operationId = operation.operationId ?? null;
 
         const parameters = await this.#parseParameters(
           [...(pathItem.parameters ?? []), ...(operation.parameters ?? [])],

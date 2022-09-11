@@ -2,7 +2,7 @@ import { HttpMethod } from "./HttpMethod.js";
 import { SchemaAst, TObject } from "./SchemaAst.js";
 
 export interface Operation {
-  readonly operationId: string;
+  readonly operationId: string | null;
   readonly path: string;
   readonly method: HttpMethod;
   readonly parameters: {

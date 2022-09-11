@@ -49,6 +49,10 @@ await (async function generateOperations() {
   const gen = new TypeStringGenerator({ namedSchemaPrefix: "schemas." });
 
   for (const op of operations) {
+    const namespace = pascalCase(
+      op.operationId ?? op.method + "-" + op.path.replace(/[^\w\d]/gi, "-")
+    );
+
     const pathParametersType = op.parameters.path
       ? gen.generate(op.parameters.path, { schemas })
       : "void";
@@ -73,7 +77,7 @@ await (async function generateOperations() {
         })
         .join(" & ") || "void";
 
-    st.write(`export namespace ${pascalCase(op.operationId)} {\n`);
+    st.write(`export namespace ${namespace} {\n`);
     st.write(`  export const method = "${op.method}";\n`);
     st.write(`  export const path = "${op.path}";\n`);
     st.write(`  export type PathParameters = ${pathParametersType};\n`);
